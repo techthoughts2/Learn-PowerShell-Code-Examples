@@ -1,3 +1,6 @@
+#____________________________________________________________
+# https://techthoughts.info/powershell-errors-and-exceptions-handling/
+#____________________________________________________________
 #Github PowerShell error documentation:
 #https://github.com/MicrosoftDocs/PowerShell-Docs/issues/1583
 

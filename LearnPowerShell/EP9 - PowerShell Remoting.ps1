@@ -1,3 +1,7 @@
+#____________________________________________________________
+# https://techthoughts.info/powershell-remoting/
+#____________________________________________________________
+
 #region WinRM Links
 
 #Running Remote Commands
