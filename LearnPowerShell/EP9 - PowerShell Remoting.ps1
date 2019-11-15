@@ -146,35 +146,6 @@ Invoke-Command -Session $sessions -ScriptBlock {Stop-Service BITS -Force}
 
 #endregion
 
-#region advanced WinRM
-
-#add server to trusted hosts
-ls WSMan:\localhost\Client\TrustedHosts
-winrm s winrm/config/client '@{TrustedHosts="673448-RAXDC01"}'
-winrm s winrm/config/client '@{TrustedHosts="579188-HYP1"}'
-
-#domain to domain (http)
-New-PSSession -ComputerName Test-Join -Credential domain\user
-$domainToDomainHTTP = New-PSSession -ComputerName RemoteDeviceName -Credential domain\account
-
-#domain to domain (requires https listener and certificates pre-configured)
-New-PSSession -ComputerName Test-Join -Credential domain\user -UseSSL
-$domainToDomainHTTPS = New-PSSession -ComputerName PDC2 -Credential domain\account -UseSSL
-
-#by IP self-signed cert
-$so = New-PSSessionOption -SkipCNCheck -SkipCACheck -SkipRevocationCheck
-$test = New-PSSession -ComputerName 10.0.3.27 -Credential domain/account -UseSSL -SessionOption $so
-
-#change port WinRM listens on
-winrm/config/Listener?Address=*+Transport=HTTP '@{Port="8888"}'
-
-#check WinRM settings
-Get-WSManInstance -ResourceURI winrm/config/service/Auth
-Get-WSManInstance -ResourceURI winrm/config/client/Auth
-Get-WSManInstance -ResourceURI winrm/config/client
-
-#endregion
-
 #region PowerShell-Linux-Remote-Access
 
 #install openssh
@@ -210,5 +181,82 @@ $credential = Get-Credential
 foreach ($server in $devices) {
     Invoke-Command -ComputerName $server -ScriptBlock {$env:COMPUTERNAME} -Credential $credential
 }
+
+#endregion
+
+#region advanced WinRM
+
+#add server to trusted hosts
+ls WSMan:\localhost\Client\TrustedHosts
+winrm s winrm/config/client '@{TrustedHosts="673448-RAXDC01"}'
+winrm s winrm/config/client '@{TrustedHosts="579188-HYP1"}'
+
+#domain to domain (http)
+New-PSSession -ComputerName Test-Join -Credential domain\user
+$domainToDomainHTTP = New-PSSession -ComputerName RemoteDeviceName -Credential domain\account
+
+#domain to domain (requires https listener and certificates pre-configured)
+New-PSSession -ComputerName Test-Join -Credential domain\user -UseSSL
+$domainToDomainHTTPS = New-PSSession -ComputerName PDC2 -Credential domain\account -UseSSL
+
+#by IP self-signed cert
+$so = New-PSSessionOption -SkipCNCheck -SkipCACheck -SkipRevocationCheck
+$test = New-PSSession -ComputerName 10.0.3.27 -Credential domain/account -UseSSL -SessionOption $so
+
+#change port WinRM listens on
+winrm/config/Listener?Address=*+Transport=HTTP '@{Port="8888"}'
+
+#check WinRM settings
+Get-WSManInstance -ResourceURI winrm/config/service/Auth
+Get-WSManInstance -ResourceURI winrm/config/client/Auth
+Get-WSManInstance -ResourceURI winrm/config/client
+
+#endregion
+
+#region final Example
+
+#declare servers we will connect to remotely
+$servers = 'Server1','Server2','Server3','Server4'
+#capture credentials used for remote access
+$creds = Get-Credential
+
+#declare array to hold remote command results
+$remoteResults = @()
+
+#declare a splat for our Invoke-Command parameters
+$invokeSplat = @{
+    ComputerName  = $servers
+    Credential    = $creds
+    ErrorVariable = 'connectErrors'
+    ErrorAction   = 'SilentlyContinue'
+}
+
+#execute remote command with splatted parameters.
+#store results in variable
+#errors will be stored in connectErrors
+$remoteResults = Invoke-Command @invokeSplat -ScriptBlock {
+    #declare a custom object to store result in and return
+    $obj = [PSCustomObject]@{
+        Name      = $env:COMPUTERNAME
+        CPUs      = "-------"
+        Memory    = "-------"
+        FreeSpace = "-------"
+    }
+    #retrieve the CPU / Memory / Hard Drive information
+    $obj.CPUs = (Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors
+    $obj.Memory = Get-CimInstance Win32_OperatingSystem `
+        | Measure-Object -Property TotalVisibleMemorySize -Sum `
+        | ForEach-Object { [Math]::Round($_.sum / 1024 / 1024) }
+    $driveData = Get-PSDrive C | Select-Object Used, Free
+    $total = $driveData.Used + $driveData.Free
+    $calc = [Math]::Round($driveData.Free / $total, 2)
+    $obj.FreeSpace = $calc * 100
+    return $obj
+}
+
+#capture any connection errors
+$remoteFailures = $connectErrors.CategoryInfo `
+    | Where-Object {$_.Reason -eq 'PSRemotingTransportException'} `
+    | Select-Object TargetName,@{n = 'ErrorInfo'; E = {$_.Reason} }
 
 #endregion
