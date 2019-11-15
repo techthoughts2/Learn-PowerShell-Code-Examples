@@ -25,7 +25,7 @@ To easily reference code examples provided in each episode.
 
 ## Author
 
-[Jake Morrison](https://twitter.com/JakeMorrison) - [http://techthoughts.info/](http://techthoughts.info/)
+[Jake Morrison](https://twitter.com/JakeMorrison) - [https://techthoughts.info/](https://techthoughts.info/)
 
 ## Contributors
 
