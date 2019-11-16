@@ -46,6 +46,9 @@ Restart-Computer -ComputerName $devices -Credential $Creds -Force
 
 #region WinRM
 
+#verify that WinRM is setup and configured locally
+Test-WSMan
+
 # basic WinRM configuration with default settings
 winrm quickconfig
 
@@ -66,9 +69,6 @@ Listener
     URLPrefix = wsman
     CertificateThumbprint
     ListeningOn = 10.0.3.253, 127.0.0.1, 192.168.1.253, ::1,
-
-#verify that WinRM is setup and configured locally
-Test-WSMan
 
 #verify that WinRM is setup and responding on a remote device
 #you must specify the authentication type when testing a remote device.
@@ -125,7 +125,6 @@ Invoke-Command -Session $sessions -ScriptBlock {
     return $perFree
 }
 
-#stop the BITS service on all remote devices
 #get the number of CPUs for each remote device
 Invoke-Command -Session $sessions -ScriptBlock {(Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors}
 
