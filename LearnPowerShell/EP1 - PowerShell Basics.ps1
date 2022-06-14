@@ -1,5 +1,5 @@
 #____________________________________________________________
-# https://techthoughts.info/learn-and-use-powershell-with-just-three-commands/
+# https://www.techthoughts.info/learn-and-use-powershell-with-just-three-commands/
 #____________________________________________________________
 # your first cmdlet - getting timezone information
 

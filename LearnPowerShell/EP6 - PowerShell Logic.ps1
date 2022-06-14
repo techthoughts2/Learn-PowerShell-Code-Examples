@@ -1,5 +1,5 @@
 #____________________________________________________________
-# https://techthoughts.info/taking-control-with-powershell-logic/
+# https://www.techthoughts.info/taking-control-with-powershell-logic/
 #____________________________________________________________
 ##################################################
 #CONDITIONAL

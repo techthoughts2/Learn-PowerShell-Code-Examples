@@ -1,5 +1,5 @@
 #____________________________________________________________
-# https://techthoughts.info/working-with-the-powershell-pipeline/
+# https://www.techthoughts.info/working-with-the-powershell-pipeline/
 #____________________________________________________________
 # the pipeline operator
 

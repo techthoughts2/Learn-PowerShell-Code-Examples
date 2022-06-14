@@ -1,5 +1,5 @@
 ﻿#____________________________________________________________
-# https://techthoughts.info/manage-cloud-with-powershell/
+# https://www.techthoughts.info/manage-cloud-with-powershell/
 #____________________________________________________________
 
 #region AWS

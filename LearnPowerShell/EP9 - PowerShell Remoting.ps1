@@ -1,5 +1,5 @@
 #____________________________________________________________
-# https://techthoughts.info/powershell-remoting/
+# https://www.techthoughts.info/powershell-remoting/
 #____________________________________________________________
 
 #region WinRM Links
@@ -27,7 +27,7 @@
 #region ComputerName
 
 # Per PowerShell documentation you can find a list of cmdlets that support ComputerName with the following:
-Get-Command | Where-Object { $_.parameters.keys -contains "ComputerName" -and $_.parameters.keys -notcontains "Session"}
+Get-Command | Where-Object { $_.parameters.keys -contains "ComputerName" -and $_.parameters.keys -notcontains "Session" }
 
 # this will prompt you to enter your access credentials. the creds will be securely stored in the variable
 $creds = Get-Credential
@@ -59,16 +59,16 @@ winrm quickconfig -transport:https
 winrm get winrm/config/client
 winrm get winrm/config/service
 
-PS C:\> winrm enumerate winrm/config/listener
+Get-Process C:\> winrm enumerate winrm/config/listener
 Listener
-    Address = *
-    Transport = HTTP
-    Port = 5985
-    Hostname
-    Enabled = true
-    URLPrefix = wsman
-    CertificateThumbprint
-    ListeningOn = 10.0.3.253, 127.0.0.1, 192.168.1.253, ::1,
+Address = *
+Transport = HTTP
+Port = 5985
+Hostname
+Enabled = true
+URLPrefix = wsman
+CertificateThumbprint
+ListeningOn = 10.0.3.253, 127.0.0.1, 192.168.1.253, ::1,
 
 #verify that WinRM is setup and responding on a remote device
 #you must specify the authentication type when testing a remote device.
@@ -95,7 +95,7 @@ $sessionHTTPS = New-PSSession -ComputerName RemoteDeviceName -Credential $creden
 
 #establish sessions to multiple devices
 $credential = Get-Credential
-$multiSession = New-PSSession -ComputerName RemoteDeviceName1,RemoteDeviceName2, RemoteDeviceName3 -Credential $credential
+$multiSession = New-PSSession -ComputerName RemoteDeviceName1, RemoteDeviceName2, RemoteDeviceName3 -Credential $credential
 
 #establish session to an entire list of devices
 $devices = Get-Content -Path C:\listOfServers.txt
@@ -111,37 +111,37 @@ $advancedSession = New-PSSession -ComputerName 10.0.3.27 -Credential user -UseSS
 #region Invoke-Command examples
 
 #get the number of CPUs for each remote device
-Invoke-Command -Session $sessions -ScriptBlock {(Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors}
+Invoke-Command -Session $sessions -ScriptBlock { (Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors }
 
 #get the amount of RAM for each remote device
-Invoke-Command -Session $sessions -ScriptBlock {Get-CimInstance Win32_OperatingSystem | Measure-Object -Property TotalVisibleMemorySize -Sum | ForEach-Object {[Math]::Round($_.sum/1024/1024)}}
+Invoke-Command -Session $sessions -ScriptBlock { Get-CimInstance Win32_OperatingSystem | Measure-Object -Property TotalVisibleMemorySize -Sum | ForEach-Object { [Math]::Round($_.sum / 1024 / 1024) } }
 
 #get the amount of free space on the C: drive for each remote device
 Invoke-Command -Session $sessions -ScriptBlock {
-    $driveData = Get-PSDrive C | Select-Object Used,Free
+    $driveData = Get-PSDrive C | Select-Object Used, Free
     $total = $driveData.Used + $driveData.Free
-    $calc = [Math]::Round($driveData.Free / $total,2)
+    $calc = [Math]::Round($driveData.Free / $total, 2)
     $perFree = $calc * 100
     return $perFree
 }
 
 #get the number of CPUs for each remote device
-Invoke-Command -Session $sessions -ScriptBlock {(Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors}
+Invoke-Command -Session $sessions -ScriptBlock { (Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors }
 
 #get the amount of RAM for each remote device
-Invoke-Command -Session $sessions -ScriptBlock {Get-CimInstance Win32_OperatingSystem | Measure-Object -Property TotalVisibleMemorySize -Sum | ForEach-Object {[Math]::Round($_.sum/1024/1024)}}
+Invoke-Command -Session $sessions -ScriptBlock { Get-CimInstance Win32_OperatingSystem | Measure-Object -Property TotalVisibleMemorySize -Sum | ForEach-Object { [Math]::Round($_.sum / 1024 / 1024) } }
 
 #get the amount of free space on the C: drive for each remote device
 Invoke-Command -Session $sessions -ScriptBlock {
-    $driveData = Get-PSDrive C | Select-Object Used,Free
+    $driveData = Get-PSDrive C | Select-Object Used, Free
     $total = $driveData.Used + $driveData.Free
-    $calc = [Math]::Round($driveData.Free / $total,2)
+    $calc = [Math]::Round($driveData.Free / $total, 2)
     $perFree = $calc * 100
     return $perFree
 }
 
 #stop the BITS service on all remote devices
-Invoke-Command -Session $sessions -ScriptBlock {Stop-Service BITS -Force}
+Invoke-Command -Session $sessions -ScriptBlock { Stop-Service BITS -Force }
 
 #endregion
 
@@ -168,9 +168,9 @@ sudo service sshd restart
 $session = New-PSSession -HostName RemoteDevice -UserName user -SSHTransport
 Enter-PSSession $session
 
-#execute commmands on a remote Linux device
+#execute commands on a remote Linux device
 $session = New-PSSession -HostName RemoteDevice -UserName user -SSHTransport
-Invoke-Command -Session $session -ScriptBlock {Get-Process}
+Invoke-Command -Session $session -ScriptBlock { Get-Process }
 
 #alternative to running Invoke-Command in parallel
 #foreach forces sequential connection and return for each server in the list
@@ -178,7 +178,7 @@ Invoke-Command -Session $session -ScriptBlock {Get-Process}
 $devices = Get-Content -Path C:\listOfServers.txt
 $credential = Get-Credential
 foreach ($server in $devices) {
-    Invoke-Command -ComputerName $server -ScriptBlock {$env:COMPUTERNAME} -Credential $credential
+    Invoke-Command -ComputerName $server -ScriptBlock { $env:COMPUTERNAME } -Credential $credential
 }
 
 #endregion
@@ -186,7 +186,7 @@ foreach ($server in $devices) {
 #region advanced WinRM
 
 #add server to trusted hosts
-ls WSMan:\localhost\Client\TrustedHosts
+Get-ChildItem WSMan:\localhost\Client\TrustedHosts
 winrm s winrm/config/client '@{TrustedHosts="673448-RAXDC01"}'
 winrm s winrm/config/client '@{TrustedHosts="579188-HYP1"}'
 
@@ -215,7 +215,7 @@ Get-WSManInstance -ResourceURI winrm/config/client
 #region final Example
 
 #declare servers we will connect to remotely
-$servers = 'Server1','Server2','Server3','Server4'
+$servers = 'Server1', 'Server2', 'Server3', 'Server4'
 #capture credentials used for remote access
 $creds = Get-Credential
 
@@ -244,8 +244,8 @@ $remoteResults = Invoke-Command @invokeSplat -ScriptBlock {
     #retrieve the CPU / Memory / Hard Drive information
     $obj.CPUs = (Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors
     $obj.Memory = Get-CimInstance Win32_OperatingSystem `
-        | Measure-Object -Property TotalVisibleMemorySize -Sum `
-        | ForEach-Object { [Math]::Round($_.sum / 1024 / 1024) }
+    | Measure-Object -Property TotalVisibleMemorySize -Sum `
+    | ForEach-Object { [Math]::Round($_.sum / 1024 / 1024) }
     $driveData = Get-PSDrive C | Select-Object Used, Free
     $total = $driveData.Used + $driveData.Free
     $calc = [Math]::Round($driveData.Free / $total, 2)
@@ -255,7 +255,7 @@ $remoteResults = Invoke-Command @invokeSplat -ScriptBlock {
 
 #capture any connection errors
 $remoteFailures = $connectErrors.CategoryInfo `
-    | Where-Object {$_.Reason -eq 'PSRemotingTransportException'} `
-    | Select-Object TargetName,@{n = 'ErrorInfo'; E = {$_.Reason} }
+| Where-Object { $_.Reason -eq 'PSRemotingTransportException' } `
+| Select-Object TargetName, @{n = 'ErrorInfo'; E = { $_.Reason } }
 
 #endregion

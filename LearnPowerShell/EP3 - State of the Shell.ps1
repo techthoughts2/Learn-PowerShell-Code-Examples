@@ -1,5 +1,5 @@
 #____________________________________________________________
-# https://techthoughts.info/powershell-history-and-current-state/
+# https://www.techthoughts.info/powershell-history-and-current-state/
 #____________________________________________________________
 # determine what version of PowerShell you are running with the following:
 $PSVersionTable

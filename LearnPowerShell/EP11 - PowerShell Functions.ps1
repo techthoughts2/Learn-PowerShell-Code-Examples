@@ -1,5 +1,5 @@
 #____________________________________________________________
-# https://techthoughts.info/powershell-functions/
+# https://www.techthoughts.info/powershell-functions/
 #____________________________________________________________
 
 #region links
@@ -102,7 +102,7 @@ function Verb-Noun {
 .EXAMPLE
     Get-Weather -City 'London' -Units Metric -Language 'en'
 
-    Returns full weather information for the city of Londa in Metric units with UK language.
+    Returns full weather information for the city of London in Metric units with UK language.
 .EXAMPLE
     Get-Weather -City 'San Antonio' -Units USCS -Short
 
@@ -110,7 +110,7 @@ function Verb-Noun {
 .PARAMETER City
     The city you would like to get the weather from. If not specified the city of your IP is used.
 .PARAMETER Units
-    Units to display Metric vs United States cusomtary units
+    Units to display Metric vs United States customary units
 .PARAMETER Language
     Language to display results in
 .PARAMETER Short
@@ -280,7 +280,7 @@ Get-NumberTimesTwo -Number 2 -Debug
 .PARAMETER URL
     i.redd.it or v.redd.it or imgur URL
 .NOTES
-    Jake Morrison - @jakemorrison - https://techthoughts.info
+    Jake Morrison - @jakemorrison - https://www.techthoughts.info
 #>
 function Show-Pics {
     [CmdletBinding()]
@@ -327,7 +327,7 @@ function Show-Pics {
     Get-Reddit -Subreddit aww -Threads 4 -ShowPics
     Retrieves the top 4 threads of the aww subreddit and if pictures are available, displays them in the native browser
 .NOTES
-    Jake Morrison - @jakemorrison - https://techthoughts.info
+    Jake Morrison - @jakemorrison - https://www.techthoughts.info
 #>
 function Get-Reddit {
     [CmdletBinding()]

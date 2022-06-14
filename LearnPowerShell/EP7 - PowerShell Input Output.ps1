@@ -1,5 +1,5 @@
 #____________________________________________________________
-# https://techthoughts.info/powershell-input-output/
+# https://www.techthoughts.info/powershell-input-output/
 #____________________________________________________________
 #INPUT
 

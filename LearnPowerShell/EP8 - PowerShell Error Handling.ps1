@@ -1,5 +1,5 @@
 #____________________________________________________________
-# https://techthoughts.info/powershell-errors-and-exceptions-handling/
+# https://www.techthoughts.info/powershell-errors-and-exceptions-handling/
 #____________________________________________________________
 #Github PowerShell error documentation:
 #https://github.com/MicrosoftDocs/PowerShell-Docs/issues/1583
@@ -94,7 +94,7 @@ finally {
 
 #The website exists, but the page does not
 try {
-    $webResults = Invoke-WebRequest -Uri 'https://techthoughts.info/nope.htm'
+    $webResults = Invoke-WebRequest -Uri 'https://www.techthoughts.info/nope.htm'
 }
 catch {
     Write-Error $_
@@ -102,7 +102,7 @@ catch {
 
 #The website exists, but the page does not
 try {
-    $webResults = Invoke-WebRequest -Uri 'https://techthoughts.info/nope.htm'
+    $webResults = Invoke-WebRequest -Uri 'https://www.techthoughts.info/nope.htm'
 }
 catch {
     $theError = $_
@@ -126,7 +126,7 @@ catch {
 
 #The website exists, but the page does not
 try {
-    $webResults = Invoke-WebRequest -Uri 'https://techthoughts.info/nope.htm'
+    $webResults = Invoke-WebRequest -Uri 'https://www.techthoughts.info/nope.htm'
 }
 catch {
     $theError = $_

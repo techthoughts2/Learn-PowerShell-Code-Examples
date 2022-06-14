@@ -4,11 +4,11 @@
 
 ## Synopsis
 
-Contains code examples used in the [Learn PowerShell Video & Blog series](https://techthoughts.info/learn-powershell-series/) for easy reference.
+Contains code examples used in the [Learn PowerShell Video & Blog series](https://www.techthoughts.info/learn-powershell-series/) for easy reference.
 
 ## Description
 
-[Learn PowerShell Video & Blog series](https://techthoughts.info/learn-powershell-series/) is an operationally focused blog and video series designed to get you ramped up and using PowerShell quickly.
+[Learn PowerShell Video & Blog series](https://www.techthoughts.info/learn-powershell-series/) is an operationally focused blog and video series designed to get you ramped up and using PowerShell quickly.
 
 The course provides numerous PowerShell examples which can be referenced in the *LearnPowerShell* directory. Examples are broken down by episode.
 
@@ -20,12 +20,12 @@ To easily reference code examples provided in each episode.
 
 ### Prerequisites
 
-* Access the [Learn PowerShell Video & Blog series](https://techthoughts.info/learn-powershell-series/)
+* Access the [Learn PowerShell Video & Blog series](https://www.techthoughts.info/learn-powershell-series/)
 * [PowerShell 5.1/6.1+/7+ installed](https://github.com/PowerShell/PowerShell/releases)
 
 ## Author
 
-[Jake Morrison](https://twitter.com/JakeMorrison) - [https://techthoughts.info/](https://techthoughts.info/)
+[Jake Morrison](https://twitter.com/JakeMorrison) - [https://www.techthoughts.info/](https://www.techthoughts.info/)
 
 ## Contributors
 
@@ -34,7 +34,3 @@ To easily reference code examples provided in each episode.
 ## License
 
 This project is [licensed under the MIT License](LICENSE).
-
-## Changelog
-
-Reference the [Changelog](.github/CHANGELOG.md)

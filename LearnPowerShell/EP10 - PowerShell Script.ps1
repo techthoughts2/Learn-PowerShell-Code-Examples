@@ -1,5 +1,5 @@
 #____________________________________________________________
-# https://techthoughts.info/powershell-scripts/
+# https://www.techthoughts.info/powershell-scripts/
 #____________________________________________________________
 
 #region links
@@ -108,7 +108,7 @@ catch {
     throw
 }
 
-#evaluate if a message needs to be sent if the drive is below 20GB freespace
+#evaluate if a message needs to be sent if the drive is below 20GB free space
 if ($percentFree -le 20) {
 
     try {

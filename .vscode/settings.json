@@ -1,3 +1,25 @@
 {
-    "powershell.codeFormatting.preset":"Stroustrup"
+    "powershell.codeFormatting.preset": "Stroustrup",
+    "cSpell.words": [
+        "COMPUTERNAME",
+        "creds",
+        "imgur",
+        "ipify",
+        "jakemorrison",
+        "learnpowershell",
+        "newcsv",
+        "notcontains",
+        "pkgs",
+        "Pubkey",
+        "quickconfig",
+        "RAXDC",
+        "Remoting",
+        "sshs",
+        "Stroustrup",
+        "techthoughts",
+        "techthoughtscontainer",
+        "techthoughtsstorage",
+        "USCS",
+        "westus"
+    ]
 }
